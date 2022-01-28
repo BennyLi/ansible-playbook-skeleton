@@ -14,6 +14,7 @@ set -o pipefail
 
 ANSIBLE_PLAYBOOK_PATH="${HOME}/.ansible_playbook"
 ANSIBLE_PLAYBOOK_REPO="git@github.com:BennyLi/ansible-playbook-skeleton.git"
+
 ANSIBLE_ROLES_PATH="${HOME}/.ansible_roles"
 ANSIBLE_ROLES_REPO="git@github.com:BennyLi/ansible-roles.git"
 
@@ -72,6 +73,18 @@ get_ansible_config() {
   fi
 }
 
+setup_ansible_cfg() {
+  if [ ! -e "${ANSIBLE_PLAYBOOK_PATH}/ansible.cfg" ]; then
+    info "Configuring ansible.cfg file ..."
+    cp "${ANSIBLE_PLAYBOOK_PATH}/ansible.cfg.default" "${ANSIBLE_PLAYBOOK_PATH}/ansible.cfg"
+    sed --in-place --regexp-extended "s|inventory =.*|inventory = ${ANSIBLE_CONFIG_PATH}/inventory.yml|g" "${ANSIBLE_PLAYBOOK_PATH}/ansible.cfg"
+    sed --in-place --regexp-extended "s|roles_path =.*|roles_path = ${ANSIBLE_ROLES_PATH}|g" "${ANSIBLE_PLAYBOOK_PATH}/ansible.cfg"
+    chmod u=r,g=r,o= "${ANSIBLE_PLAYBOOK_PATH}/ansible.cfg"
+  else
+    info "The configuration file ${BOLD}${ANSIBLE_PLAYBOOK_PATH}/ansible.cfg${RESET} is already present. ${YELLOW}Skipping!${RESET}"
+  fi
+}
+
 
 
 ################################################################################
@@ -84,3 +97,4 @@ get_ansible_playbook
 get_ansible_roles
 get_ansible_config
 
+setup_ansible_cfg

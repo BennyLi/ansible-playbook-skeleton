@@ -1,0 +1,24 @@
+#
+# See https://docs.ansible.com/ansible/latest/reference_appendices/config.html
+#
+
+
+[defaults]
+# As we are using a Python virtualenv, everything should be stored locally
+collections_path = .virtualenv/ansible_collections
+
+# ----- The inventory
+# Here you will define all your hosts/machines/devices that should be managed by Ansible.
+# Inside the parent directory, all your variables will be stored.
+# NOTE: This is your private repo with all your sensitive data.
+#       You could also store your playbook file here.
+inventory = ~/.ansible_config/inventory.yml
+
+# ----- The roles
+# In this place you will find all your roles, that you can use in your playbook.
+# NOTE: If you have an sensible files store them either in your ansible config repo (see above)
+#       OR in your private dotfiles. Always remember to encrypt these with ansible-vault ...
+roles_path = ~/.ansible_roles
+
+
+# vim: ft=config:

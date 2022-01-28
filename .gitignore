@@ -1,0 +1,6 @@
+# ---> Ansible
+*.retry
+.vault_pass
+.virtualenv
+# only commit the default file
+ansible.cfg
