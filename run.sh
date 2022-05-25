@@ -33,7 +33,7 @@ ANSIBLE_INVENTORY="$(sed --regexp-extended --silent 's/inventory = (.*)/\1/p' "$
 ANSIBLE_ROLES="$(sed --regexp-extended --silent 's/roles_path = (.*)/\1/p' "$ANSIBLE_CONFIG_FILE")"
 ANSIBLE_ARGS=""
 
-VAULT_PASSWORD_FILE="./.vault_pass"
+VAULT_PASSWORD_FILE="${PROJECT_ROOT}/.vault_pass"
 
 ################################################################################
 #

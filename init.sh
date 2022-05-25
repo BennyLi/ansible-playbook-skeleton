@@ -21,8 +21,16 @@ ANSIBLE_ROLES_REPO="git@github.com:BennyLi/ansible-roles.git"
 ANSIBLE_CONFIG_PATH="${HOME}/.ansible_config"
 ANSIBLE_CONFIG_REPO=""
 
+PRIVATE_DOTFILES_PATH=""
+PRIVATE_DOTFILES_REPO=""
+PUBLIC_DOTFILES_PATH="${HOME}/.dotfiles/public"
+PUBLIC_DOTFILES_REPO="git@github.com:BennyLi/dotfiles.git"
+
+DOCKERFILES_PATH="${HOME}/.dockerfiles"
+DOCKERFILES_REPO="git@github.com:BennyLi/dockerfiles.git"
+
 #
-# Some Colors for logging to stdout
+# Some Colors for logging
 #
   BOLD="$(tput bold)"
   RESET="$(tput sgr0)"
@@ -45,6 +53,16 @@ warn()        { echo -e    "${YELLOW}! [WARN]   $*${RESET}"; }
 error()       { echo -e    "${RED}X [ERROR]  🚨 $* 🚨${RESET}"; }
 error_done()  { echo -e    "${RED} [$1]${RESET}"; }
 errexit()     { error "$*"; exit 1; }
+
+install_requirements() {
+  if command -v pacman; then
+    info "Installing requirements using pacman ..."
+    sudo pacman -S sshpass
+  else
+    error "Cannot install requirements, cause I don't know your package manager :("
+    warn  "Some roles or hosts may not work ..."
+  fi
+}
 
 get_ansible_playbook() {
   if [ ! -d "$ANSIBLE_PLAYBOOK_PATH" ]; then
@@ -85,6 +103,34 @@ setup_ansible_cfg() {
   fi
 }
 
+get_public_dotfiles() {
+  if [ ! -d "$PUBLIC_DOTFILES_PATH" ]; then
+    info "Cloning public dotfiles repo to ${BOLD}${PUBLIC_DOTFILES_PATH}${RESET} ..."
+    git clone "$PUBLIC_DOTFILES_REPO" "$PUBLIC_DOTFILES_PATH"
+  else
+    info "Folder for the ${BOLD}public dotfiles repo${RESET} already present. ${YELLOW}Skipping!${RESET}"
+  fi
+}
+
+get_private_dotfiles() {
+  warn "Not yet implemented!"
+}
+
+get_dotfiles() {
+  get_public_dotfiles
+  get_private_dotfiles
+}
+
+get_dockerfiles() {
+  if [ ! -d "$DOCKERFILES_PATH" ]; then
+    info "Cloning Dockerfiles repo to ${BOLD}${DOCKERFILES_PATH}${RESET} ..."
+    git clone "$DOCKERFILES_REPO" "$DOCKERFILES_PATH"
+  else
+    info "Folder for the ${BOLD}Dockerfiles repo${RESET} already present. ${YELLOW}Skipping!${RESET}"
+  fi
+}
+
+
 
 
 ################################################################################
@@ -93,8 +139,13 @@ setup_ansible_cfg() {
 #
 ################################################################################
 
+install_requirements
+
 get_ansible_playbook
 get_ansible_roles
 get_ansible_config
+
+get_dotfiles
+get_dockerfiles
 
 setup_ansible_cfg
