@@ -12,22 +12,34 @@ set -o pipefail
 #
 ################################################################################
 
-ANSIBLE_PLAYBOOK_PATH="${HOME}/.ansible_playbook"
+# Mandatory
 ANSIBLE_PLAYBOOK_REPO="git@github.com:BennyLi/ansible-playbook-skeleton.git"
+# The local path, where the playbook repo will be checked out.
+ANSIBLE_PLAYBOOK_PATH="${HOME}/.ansible_playbook"
 
-ANSIBLE_ROLES_PATH="${HOME}/.ansible_roles"
+# Mandatory
 ANSIBLE_ROLES_REPO="git@github.com:BennyLi/ansible-roles.git"
+# The local path, where the roles repo will be checked out.
+ANSIBLE_ROLES_PATH="${HOME}/.ansible_roles"
 
+# Mandatory
+ANSIBLE_CONFIG_REPO="https://github.com/BennyLi/ansible-config-example"
+# The local path, where the config repo will be checked out.
 ANSIBLE_CONFIG_PATH="${HOME}/.ansible_config"
-ANSIBLE_CONFIG_REPO=""
 
-PRIVATE_DOTFILES_PATH=""
+# Optional - If not set, it won't be used.
 PRIVATE_DOTFILES_REPO=""
-PUBLIC_DOTFILES_PATH="${HOME}/.dotfiles/public"
+# The local path, where the private dotfiles repo will be checked out.
+PRIVATE_DOTFILES_PATH=""
+# Optional - If not set, it won't be used.
 PUBLIC_DOTFILES_REPO="git@github.com:BennyLi/dotfiles.git"
+# The local path, where the public dotfiles repo will be checked out.
+PUBLIC_DOTFILES_PATH="${HOME}/.dotfiles/public"
 
-DOCKERFILES_PATH="${HOME}/.dockerfiles"
+# Optional - If not set, it won't be used.
 DOCKERFILES_REPO="git@github.com:BennyLi/dockerfiles.git"
+# The local path, where the dockerfiles repo will be checked out.
+DOCKERFILES_PATH="${HOME}/.dockerfiles"
 
 #
 # Some Colors for logging
