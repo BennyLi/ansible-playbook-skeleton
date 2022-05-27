@@ -104,16 +104,29 @@ setup_ansible_cfg() {
 }
 
 get_public_dotfiles() {
-  if [ ! -d "$PUBLIC_DOTFILES_PATH" ]; then
-    info "Cloning public dotfiles repo to ${BOLD}${PUBLIC_DOTFILES_PATH}${RESET} ..."
-    git clone "$PUBLIC_DOTFILES_REPO" "$PUBLIC_DOTFILES_PATH"
+  if [ -n "$PUBLIC_DOTFILES_REPO" ]; then
+    if [ ! -d "$PUBLIC_DOTFILES_PATH" ]; then
+      info "Cloning public dotfiles repo to ${BOLD}${PUBLIC_DOTFILES_PATH}${RESET} ..."
+      git clone "$PUBLIC_DOTFILES_REPO" "$PUBLIC_DOTFILES_PATH"
+    else
+      info "Folder for the ${BOLD}public dotfiles repo${RESET} already present. ${YELLOW}Skipping!${RESET}"
+    fi
   else
-    info "Folder for the ${BOLD}public dotfiles repo${RESET} already present. ${YELLOW}Skipping!${RESET}"
+    info "No ${BOLD}public dotfiles repo${RESET} set. ${YELLOW}Skipping!${RESET}"
   fi
 }
 
 get_private_dotfiles() {
-  warn "Not yet implemented!"
+  if [ -n "$PRIVATE_DOTFILES_REPO" ]; then
+    if [ ! -d "$PRIVATE_DOTFILES_PATH" ]; then
+      info "Cloning private dotfiles repo to ${BOLD}${PRIVATE_DOTFILES_PATH}${RESET} ..."
+      git clone "$PRIVATE_DOTFILES_REPO" "$PRIVATE_DOTFILES_PATH"
+    else
+      info "Folder for the ${BOLD}private dotfiles repo${RESET} already present. ${YELLOW}Skipping!${RESET}"
+    fi
+  else
+    info "No ${BOLD}private dotfiles repo${RESET} set. ${YELLOW}Skipping!${RESET}"
+  fi
 }
 
 get_dotfiles() {
@@ -122,11 +135,15 @@ get_dotfiles() {
 }
 
 get_dockerfiles() {
-  if [ ! -d "$DOCKERFILES_PATH" ]; then
-    info "Cloning Dockerfiles repo to ${BOLD}${DOCKERFILES_PATH}${RESET} ..."
-    git clone "$DOCKERFILES_REPO" "$DOCKERFILES_PATH"
+  if [ -n "$DOCKERFILES_REPO" ]; then
+    if [ ! -d "$DOCKERFILES_PATH" ]; then
+      info "Cloning Dockerfiles repo to ${BOLD}${DOCKERFILES_PATH}${RESET} ..."
+      git clone "$DOCKERFILES_REPO" "$DOCKERFILES_PATH"
+    else
+      info "Folder for the ${BOLD}Dockerfiles repo${RESET} already present. ${YELLOW}Skipping!${RESET}"
+    fi
   else
-    info "Folder for the ${BOLD}Dockerfiles repo${RESET} already present. ${YELLOW}Skipping!${RESET}"
+    info "No ${BOLD}Dockerfiles repo${RESET} set. ${YELLOW}Skipping!${RESET}"
   fi
 }
 
