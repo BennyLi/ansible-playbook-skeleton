@@ -17,12 +17,14 @@ The **basic setup** includes at least two additional git repositories:
 
 You can add even more repositories to the **extended setup**:
 
-3. A Public and a Private Dotfiles Repository
-   If you like to seperate things and be more independet from Ansible, you can add a public and a private dotfiles repository.
+3. A Public Dotfiles Repository
+   If you like to seperate things and be more independet from Ansible, you can add a public repository.
    You can find my public dotfiles repository [here](https://github.com/BennyLi/dotfiles).
-   Why two different repositories?
-   I don't like to add my private, sensible data (like credentials) to a public Git repository, even when this data is encrypted.
+   But what about my sensitive data?
+   I don't like to add my private, sensible data (like credentials) to a public Git repository, even when this data is encrypted, too.
    So I seperate these informations and you may too.
+   The above mentioned config repository holds the Ansible variables and your vault.
+   Store your sensitive data there and put variables into the Dotfiles, that will be replaced by Ansible on playbook execution.
 4. A Dockerfiles Repository
    Some applications of mine are running inside Docker containers.
    The setup is maintained seperatly in a dedicated Git repository (which you can find [here](https://github.com/BennyLi/dockerfiles)).

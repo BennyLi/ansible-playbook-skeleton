@@ -28,10 +28,6 @@ ANSIBLE_CONFIG_REPO="https://github.com/BennyLi/ansible-config-example"
 ANSIBLE_CONFIG_PATH="${HOME}/.ansible_config"
 
 # Optional - If not set, it won't be used.
-PRIVATE_DOTFILES_REPO=""
-# The local path, where the private dotfiles repo will be checked out.
-PRIVATE_DOTFILES_PATH=""
-# Optional - If not set, it won't be used.
 PUBLIC_DOTFILES_REPO="git@github.com:BennyLi/dotfiles.git"
 # The local path, where the public dotfiles repo will be checked out.
 PUBLIC_DOTFILES_PATH="${HOME}/.dotfiles/public"
@@ -128,24 +124,6 @@ get_public_dotfiles() {
   fi
 }
 
-get_private_dotfiles() {
-  if [ -n "$PRIVATE_DOTFILES_REPO" ]; then
-    if [ ! -d "$PRIVATE_DOTFILES_PATH" ]; then
-      info "Cloning private dotfiles repo to ${BOLD}${PRIVATE_DOTFILES_PATH}${RESET} ..."
-      git clone "$PRIVATE_DOTFILES_REPO" "$PRIVATE_DOTFILES_PATH"
-    else
-      info "Folder for the ${BOLD}private dotfiles repo${RESET} already present. ${YELLOW}Skipping!${RESET}"
-    fi
-  else
-    info "No ${BOLD}private dotfiles repo${RESET} set. ${YELLOW}Skipping!${RESET}"
-  fi
-}
-
-get_dotfiles() {
-  get_public_dotfiles
-  get_private_dotfiles
-}
-
 get_dockerfiles() {
   if [ -n "$DOCKERFILES_REPO" ]; then
     if [ ! -d "$DOCKERFILES_PATH" ]; then
@@ -174,7 +152,7 @@ get_ansible_playbook
 get_ansible_roles
 get_ansible_config
 
-get_dotfiles
+get_public_dotfiles
 get_dockerfiles
 
 setup_ansible_cfg
