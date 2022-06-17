@@ -19,18 +19,16 @@ set -o nounset
 #
 ################################################################################
 
+source ./variables.env
+
 PROJECT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-PYTHON_VIRTUAL_ENV_NAME=".virtualenv"
-PYTHON_VIRTUAL_ENV_PATH="${PROJECT_ROOT}/${PYTHON_VIRTUAL_ENV_NAME}"
-
 INVENTORY=""
-PLAYBOOK="/home/bln/.ansible_config/playbook.yml"
+PLAYBOOK="${ANSIBLE_CONFIG_PATH}/playbook.yml"
 ADDTIONAL_PLAYBOOKS=""
 #ANSIBLE_CONFIG="$(sed --regexp-extended --silent 's/')"
 ANSIBLE_CONFIG_FILE="${PROJECT_ROOT}/ansible.cfg"
-ANSIBLE_INVENTORY="$(sed --regexp-extended --silent 's/inventory = (.*)/\1/p' "$ANSIBLE_CONFIG_FILE")"
-ANSIBLE_ROLES="$(sed --regexp-extended --silent 's/roles_path = (.*)/\1/p' "$ANSIBLE_CONFIG_FILE")"
+ANSIBLE_INVENTORY="${ANSIBLE_CONFIG_PATH}/inventory.yml"
 ANSIBLE_ARGS=""
 
 VAULT_PASSWORD_FILE="${PROJECT_ROOT}/.vault_pass"
@@ -156,5 +154,7 @@ ansible-playbook \
   --extra-vars user_name_from_env="$(id --user --name)" \
   --extra-vars user_group_from_env="$(id --group --name)" \
   --extra-vars user_shell_from_env="$(echo $SHELL | sed -En 's/.*\/(\w*)/\1/p')" \
+  --extra-vars dockerfiles_path="$DOCKERFILES_PATH" \
+  --extra-vars public_dotfiles_path="$PUBLIC_DOTFILES_PATH" \
   ${ANSIBLE_ARGS} \
   ${PLAYBOOK} ${ADDTIONAL_PLAYBOOKS}
