@@ -55,8 +55,11 @@ source "${PROJECT_ROOT}/scripts/logging.sh"
 
   if [ "$selection" -eq 1 ]; then
     read -p "Where to store the new vault file? If relative path given, will be stored in ${ANSIBLE_CONFIG_PATH} " vault
-    if # TODO relative path given
+    if [[ $vault != /* ]]; then
+      vault="${ANSIBLE_CONFIG_PATH}/${vault}"
+    fi
     info "Will create a new vault file at '${vault}'"
+    exit 2
     CMD_PARAMS="create $CMD_PARAMS"
   else
     vault="$(sed -n "${selection}p" ${ANSIBLE_VAULT_FILE_LIST})"
