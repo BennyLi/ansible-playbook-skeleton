@@ -5,9 +5,6 @@ set -o nounset
 set -o pipefail
 set -o errexit
 
-# TODO
-# - Vault command
-
 PROJECT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 source "${PROJECT_ROOT}/variables.env"
@@ -59,7 +56,6 @@ source "${PROJECT_ROOT}/scripts/logging.sh"
       vault="${ANSIBLE_CONFIG_PATH}/${vault}"
     fi
     info "Will create a new vault file at '${vault}'"
-    exit 2
     CMD_PARAMS="create $CMD_PARAMS"
   else
     vault="$(sed -n "${selection}p" ${ANSIBLE_VAULT_FILE_LIST})"
