@@ -149,11 +149,11 @@ info "Passing '${ANSIBLE_ARGS}' as arguments to the ansible-playbook command ...
 
 info "Executing the Ansible playbook ..."
 ansible-playbook \
-  --ask-become-pass \
   --inventory "${INVENTORY:-$ANSIBLE_INVENTORY}" \
   --extra-vars user_name_from_env="$(id --user --name)" \
   --extra-vars user_group_from_env="$(id --group --name)" \
   --extra-vars user_shell_from_env="$(echo $SHELL | sed -En 's/.*\/(\w*)/\1/p')" \
+  --extra-vars ansible_roles_path="$ANSIBLE_ROLES_PATH" \
   --extra-vars dockerfiles_path="$DOCKERFILES_PATH" \
   --extra-vars public_dotfiles_path="$PUBLIC_DOTFILES_PATH" \
   ${ANSIBLE_ARGS} \
