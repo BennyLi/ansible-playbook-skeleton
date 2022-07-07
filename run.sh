@@ -148,6 +148,8 @@ info "I will provision these machines: ${INVENTORY}"
 info "Passing '${ANSIBLE_ARGS}' as arguments to the ansible-playbook command ..."
 
 info "Executing the Ansible playbook ..."
+#ANSIBLE_DEBUG=1
+#export ANSIBLE_DEBUG
 ansible-playbook \
   --inventory "${INVENTORY:-$ANSIBLE_INVENTORY}" \
   --extra-vars user_name_from_env="$(id --user --name)" \
